@@ -1,13 +1,12 @@
 import * as React from "react";
 import { FlatList } from "react-native";
-import { Products } from "../Objects/Products";
 import ProductCard from "./ProductCard";
 
-export default function ProductsList() {
+export default function ProductsList({ products }) {
   return (
     <FlatList
-      data={Products}
-      keyExtractor={(Product) => Product.id.toString()}
+      data={products}
+      keyExtractor={(item) => item.id.toString()}
       renderItem={({ item }) => <ProductCard {...item} />}
       numColumns={2}
       columnWrapperStyle={{ justifyContent: 'space-between' }}

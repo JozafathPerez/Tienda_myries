@@ -1,17 +1,29 @@
 import * as React from "react";
 import { View, Text, Image } from "react-native";
+import { styled } from "nativewind";
 
-export default function ProductCard({ image, category, title, price}) {
+const StyledView = styled(View);
+const StyledText = styled(Text);
+const StyledImage = styled(Image);
+
+export default function ProductCard({ image, category, title, price }) {
   return (
-    <View className="flex-1 w-1/2 p-2 bg-slate-300 rounded-2xl m-2">
-      <View className="rounded-2xl overflow-hidden">
-        <Image source={{ uri: image }} className="h-40 w-30" />
-      </View>
-      <View className="mt-5">
-        <Text numberOfLines={1} className="text-lg font-semibold">{title}</Text>
-        <Text>{category}</Text>
-        <Text className="text-2xl font-extrabold">₡ {price}</Text>
-      </View>
-    </View>
+    <StyledView className="flex-1 w-1/2 p-2 bg-slate-300 rounded-2xl m-2">
+      <StyledView className="rounded-2xl overflow-hidden">
+        <StyledImage 
+          source={image} 
+          className="h-40 w-30" 
+          resizeMode="object-scale-down" 
+          style={{ height: 160, width: 155 }}
+        />
+      </StyledView>
+      <StyledView className="mt-5">
+        <StyledText numberOfLines={2} className="text-lg font-semibold">
+          {title}
+        </StyledText>
+        <StyledText>{category}</StyledText>
+        <StyledText className="text-2xl font-extrabold">₡ {price}</StyledText>
+      </StyledView>
+    </StyledView>
   );
 }
