@@ -1,5 +1,7 @@
 import { Ionicons } from "@expo/vector-icons"; 
 import { View, Image, StyleSheet } from "react-native";
+import { CartContext } from './Objects/CartContext';
+
 
 const Logo = () => (
     <Image
