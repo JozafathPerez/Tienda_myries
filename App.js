@@ -14,11 +14,11 @@ export default function App() {
   return (
     <NavigationContainer>
       <Menu.Navigator>
-        <Menu.Screen name="Home" component={Home} options={{ headerTitle: "Inicio" }} />
-        <Menu.Screen name="Contacts" component={Contacts} />
-        <Menu.Screen name="Account" component={Account} />
-        <Menu.Screen name="Catalog" component={Catalog} />
-        <Menu.Screen name="Cart" component={Cart} />
+        <Menu.Screen name="Inicio" component={Home} options={{ headerTitle: "Inicio" }} />
+        <Menu.Screen name="Catalogo" component={Catalog} />
+        <Menu.Screen name="Carrito" component={Cart} />
+        <Menu.Screen name="Cuenta" component={Account} />
+        <Menu.Screen name="Contactenos" component={Contacts} />
       </Menu.Navigator>
     </NavigationContainer>
   );

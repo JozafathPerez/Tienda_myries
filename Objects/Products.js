@@ -143,7 +143,4 @@ export const Products = [
     category: "Cuchillas",
     image: require('./Images/Cuchilla(Ceramica).jpg')
   },
-
-
-
 ];
