@@ -1,18 +1,16 @@
-import { Text, StyleSheet, View } from "react-native";
+import React from "react";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import ProductsList from "../components/ProductsList";
 
-export function Home() {
+const Home = () => {
   return (
-    <View style={styles.container}>
-      <Text>Home</Text>
-    </View>
+    <GestureHandlerRootView>
+      <SafeAreaView className="flex-1 mx-5">
+        <ProductsList />
+      </SafeAreaView>
+    </GestureHandlerRootView>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
+export default Home;
