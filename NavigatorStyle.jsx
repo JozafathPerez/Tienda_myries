@@ -35,7 +35,7 @@ const Logo = () => (
     drawerIcon: () => false,
   });
   
-  const homeScreenOptions = ({ navigation }) => {
+  const homeOptions = ({ navigation }) => {
     const options = commonHeaderOptions({ navigation });
     return {
       ...options,
@@ -79,8 +79,34 @@ const Logo = () => (
       ),
     };
   };
+
+  const accountOptions = ({ navigation }) => {
+    const options = commonHeaderOptions({ navigation });
+    return {
+      ...options,
+      drawerIcon: ({ focused, color, size }) => (
+        <Ionicons
+          name={focused ? "person-outline" : "person"}
+          size={60}
+          color={color}
+        />
+      ),
+      headerRight: () => (
+        <IconContainer>
+          <Ionicons 
+            name="cart-outline" 
+            size={30} 
+            color="black" 
+            onPress={() => navigation.navigate('Carrito')} 
+            style={{ marginRight: 20 }}
+          />
+          {options.headerRight()}
+        </IconContainer>
+      ),
+    };
+  };
   
-  const CartScreenOptions = commonHeaderOptions;
+  const cartOptions = commonHeaderOptions;
 
   const styles = StyleSheet.create({
     iconContainer: {
@@ -90,4 +116,4 @@ const Logo = () => (
     },
   });
 
-  export { CartScreenOptions, homeScreenOptions, otherScreenOptions };
+  export { cartOptions, homeOptions, otherScreenOptions , accountOptions};
