@@ -3,6 +3,12 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 import { NavigationContainer } from "@react-navigation/native";
 import Toast from 'react-native-toast-message';
 
+// config para vista de navegador
+import { NativeWindStyleSheet } from "nativewind";
+NativeWindStyleSheet.setOutput({
+  default: "native",
+});
+
 // Imports de las paginas
 import Home from "./pages/Home";
 import Contacts from "./pages/Contacts";
