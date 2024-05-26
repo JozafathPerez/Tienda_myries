@@ -11,7 +11,7 @@ import Cart from "./pages/Cart";
 import { CartProvider } from "./Objects/CartContext";
 
 // Import del estilo de la barra de navegador
-import { CartScreenOptions, homeScreenOptions, otherScreenOptions } from './NavigatorStyle';
+import { cartOptions, homeOptions, otherScreenOptions, accountOptions } from './NavigatorStyle';
 
 const Menu = createDrawerNavigator();
 
@@ -19,11 +19,11 @@ export default function App() {
   return (
     <CartProvider>
       <NavigationContainer>
-        <Menu.Navigator screenOptions={{ drawerPosition: 'right' }}>
-          <Menu.Screen name="Inicio" component={Home} options={homeScreenOptions} />
-          <Menu.Screen name="Catalogo" component={Catalog} options={homeScreenOptions} />
-          <Menu.Screen name="Carrito" component={Cart} options={CartScreenOptions} />
-          <Menu.Screen name="Cuenta" component={Account} options={otherScreenOptions} />
+        <Menu.Navigator initialRouteName = 'Inicio' screenOptions={{ drawerPosition: 'right' }}>
+          <Menu.Screen name="Cuenta" component={Account} options={accountOptions} />
+          <Menu.Screen name="Inicio" component={Home} options={homeOptions} />
+          <Menu.Screen name="Catalogo" component={Catalog} options={homeOptions} />
+          <Menu.Screen name="Carrito" component={Cart} options={cartOptions} /> 
           <Menu.Screen name="Contactenos" component={Contacts} options={otherScreenOptions} />
         </Menu.Navigator>
       </NavigationContainer>
