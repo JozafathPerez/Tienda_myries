@@ -1,14 +1,13 @@
-import * as React from "react";
-import { FlatList } from "react-native";
-import { Products } from "../Objects/Products";
-import CartCard from "./CartCard";
+import * as React from 'react';
+import { FlatList } from 'react-native';
+import CartCard from './CartCard';
 
-export default function ProductsList() {
+export default function CartList({ products }) {
   return (
     <FlatList
-      data={Products}
-      keyExtractor={(Product) => Product.id.toString()}
-      renderItem={({ item }) => <CartCard {...item} />}
+      data={products}
+      keyExtractor={(item) => item.id.toString()}
+      renderItem={({ item }) => <CartCard product={item} />}
       numColumns={1}
     />
   );

@@ -1,12 +1,10 @@
-import * as React from "react";
-import { useState } from "react";
-import { View, Text, Image, TextInput, TouchableOpacity } from "react-native";
+import React, { useState } from 'react';
+import { View, Text, Image, TextInput, TouchableOpacity } from 'react-native';
 
-export default function CartCard({ image, category, title, price}) {
-  const [quantity, setQuantity] = useState(1);
+export default function CartCard({ product }) {
+  const [quantity, setQuantity] = useState(product.quantity);
 
-  // Calcula el subtotal basado en la cantidad
-  const subtotal = price * quantity;
+  const subtotal = product.price * quantity;
 
   // Maneja el cambio en la entrada de cantidad
   const handleQuantityChange = (text) => {
@@ -31,22 +29,22 @@ export default function CartCard({ image, category, title, price}) {
       <View className="flex-row">
         <View className="h-20 w-20 rounded-2xl overflow-hidden">
           <Image 
-            source={{ uri: image }} 
+            source={product.image} 
             className="h-full w-full" 
             resizeMode="cover"
           />
         </View>
         <View className="flex-1 ml-5 justify-center">
-          <Text numberOfLines={1} className="text-lg font-semibold">{title}</Text>
-          <Text>{category}</Text>
+          <Text numberOfLines={1} className="text-lg font-semibold">{product.title}</Text>
+          <Text>{product.category}</Text>
         </View>
       </View>
-      {/* Contenedor para el precio, selector de cantidad y subtotal */}
-      <View className="flex-row flex-wrap  space-x-5">
-        <Text className="text-xl font-bold pt-2.5">₡ {price.toFixed(2)}</Text>
+      <View className="mt-5">
+        <Text className="text-xl font-bold">₡ {product.price.toFixed(2)}</Text>
         <View className="flex-row items-center mt-2">
-          <TouchableOpacity onPress={decrementQuantity} className="w-8 h-8 px-2 py-1 bg-gray-400 rounded items-center justify-center">
-              <Text className="text-lg font-extrabold">-</Text>
+          <Text className="mr-2">Cantidad:</Text>
+          <TouchableOpacity onPress={decrementQuantity} className="w-8 h-8 bg-gray-400 rounded items-center justify-center">
+            <Text className="text-lg font-bold">-</Text>
           </TouchableOpacity>
           <TextInput 
             value={String(quantity)}
@@ -54,8 +52,8 @@ export default function CartCard({ image, category, title, price}) {
             keyboardType="numeric"
             className="border border-gray-400 rounded p-1 w-12 text-center mx-2"
           />
-          <TouchableOpacity onPress={incrementQuantity} className="w-8 h-8 px-2 py-1 bg-gray-400 rounded items-center justify-center">
-            <Text className="text-lg font-extrabold">+</Text>
+          <TouchableOpacity onPress={incrementQuantity} className="w-8 h-8 bg-gray-400 rounded items-center justify-center">
+            <Text className="text-lg font-bold">+</Text>
           </TouchableOpacity>
         </View>
         <Text className="mt-2 text-lg font-bold">Subtotal: ₡ {subtotal.toFixed(2)}</Text>
