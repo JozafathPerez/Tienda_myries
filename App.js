@@ -1,6 +1,7 @@
 import React from "react";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { NavigationContainer } from "@react-navigation/native";
+import Toast from 'react-native-toast-message';
 
 // Imports de las paginas
 import Home from "./pages/Home";
@@ -10,7 +11,7 @@ import Catalog from "./pages/Catalog";
 import Cart from "./pages/Cart";
 import { CartProvider } from "./Objects/CartContext";
 
-// Import del estilo de la barra de navegador
+// Import del estilo de la barra de navegador y mensajes tipo toast
 import { cartOptions, homeOptions, otherScreenOptions, accountOptions } from './NavigatorStyle';
 
 const Menu = createDrawerNavigator();
@@ -26,6 +27,7 @@ export default function App() {
           <Menu.Screen name="Carrito" component={Cart} options={cartOptions} /> 
           <Menu.Screen name="Contactenos" component={Contacts} options={otherScreenOptions} />
         </Menu.Navigator>
+        <Toast ref={(ref) => React.forwardRef(ref)} />
       </NavigationContainer>
     </CartProvider>
   );
