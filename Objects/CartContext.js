@@ -41,9 +41,16 @@ export const CartProvider = ({ children }) => {
     setCart([]);
   };
 
+    // Función para obtener el total de elementos en el carrito
+  const getTotalItemsInCart = () => {
+    return cart.reduce((total, item) => total + item.quantity, 0);
+  };
+
   return (
     <CartContext.Provider value={{ cart, addToCart, updateCart, removeFromCart, clearCart }}>
       {children}
     </CartContext.Provider>
   );
 };
+
+
