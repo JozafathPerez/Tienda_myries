@@ -1,7 +1,7 @@
 import * as React from "react";
 import { View, Text, Image } from "react-native";
 
-export default function ProductCard({ image, category, title, price }) {
+export default function ProductCard({ image, category, title, price}) {
   return (
     <View className="flex-1 w-1/2 p-2 bg-slate-300 rounded-2xl m-2">
       <View className="rounded-2xl overflow-hidden">

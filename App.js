@@ -2,7 +2,6 @@ import React from "react";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { NavigationContainer } from "@react-navigation/native";
 import "react-native-gesture-handler";
-import { Account } from "./pages/Account";
 import Home from "./pages/Home";
 import Contacts from "./pages/Contacts";
 import Account from "./pages/Account";
