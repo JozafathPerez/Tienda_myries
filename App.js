@@ -6,8 +6,11 @@ import { Contacts } from "./pages/Contacts";
 import { Account } from "./pages/Account";
 import { Catalog } from "./pages/Catalog";
 import { Cart } from "./pages/Cart";
+import { NativeWindStyleSheet } from "nativewind";
 
-
+NativeWindStyleSheet.setOutput({
+  default: "native",
+});
 
 const Menu = createDrawerNavigator();
 
