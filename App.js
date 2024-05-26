@@ -26,14 +26,14 @@ export default function App() {
   return (
     <CartProvider>
       <NavigationContainer>
-        <Menu.Navigator initialRouteName = 'Inicio' screenOptions={{ drawerPosition: 'right' }}>
+        <Menu.Navigator initialRouteName='Inicio' screenOptions={{ drawerPosition: 'right' }}>
           <Menu.Screen name="Cuenta" component={Account} options={accountOptions} />
           <Menu.Screen name="Inicio" component={Home} options={homeOptions} />
           <Menu.Screen name="Catalogo" component={Catalog} options={homeOptions} />
-          <Menu.Screen name="Carrito" component={Cart} options={cartOptions} /> 
+          <Menu.Screen name="Carrito" component={Cart} options={cartOptions} />
           <Menu.Screen name="Contactenos" component={Contacts} options={otherScreenOptions} />
         </Menu.Navigator>
-        <Toast ref={(ref) => React.forwardRef(ref)} />
+        <Toast />
       </NavigationContainer>
     </CartProvider>
   );

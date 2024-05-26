@@ -10,13 +10,10 @@ export const CartProvider = ({ children }) => {
     const productExists = cart.find(item => item.id === product.id);
     
     if (productExists) {
-      setCart(cart.map(item =>
-        item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
-      ));
       Toast.show({
         type: 'success',
         text1: `${product.title} agregado al carrito`,
-        text2: 'Cantidad aumentada',
+        text2: 'El producto ya se encuentra en el carrito',
       });
     } else {
       setCart([...cart, { ...product, quantity: 1, paid: false }]);
