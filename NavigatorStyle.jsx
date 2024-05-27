@@ -94,7 +94,7 @@ const homeOptions = ({ navigation }) => {
 
   const handleSearch = (query) => {
     setSearchVisible(false);
-    navigation.navigate('Catalogo', { query });
+    navigation.navigate('Catálogo', { query });
   };
 
   const handleCloseSearch = () => {
@@ -142,7 +142,7 @@ const catalogOptions = ({ navigation }) => {
 
   return {
     ...options,
-    headerTitle: searchVisible ? '' : 'Catalogo',
+    headerTitle: searchVisible ? '' : 'Catálogo',
     headerRight: () => (
       <IconContainer>
         {searchVisible ? (
