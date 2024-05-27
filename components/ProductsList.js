@@ -17,7 +17,8 @@ const calcNumColumns = (width) => {
 
 const renderItem = ({ item, index }) => {
   if (item.empty) {
-    return <StyledView className="flex-1 m-2 bg-transparent"/>;
+    // Elemento "vacío" con el mismo estilo que el ProductCard
+    return <StyledView className="flex-1 w-1/2 p-2 bg-transparent rounded-2xl m-2"/>;
   }
   return (
     <ProductCard {...item} />
