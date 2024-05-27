@@ -50,7 +50,7 @@ const IconContainer = ({ children }) => (
 
 const commonHeaderOptions = ({ navigation }) => ({
   headerStyle: {
-    height: 100,
+    height: 110,
   },
   headerTitleStyle: {
     fontSize: 24,
@@ -88,8 +88,6 @@ const cartOptions = ({ navigation }) => {
   };
 };
 
-
-
 const homeOptions = ({ navigation }) => {
   const options = commonHeaderOptions({ navigation });
   const [searchVisible, setSearchVisible] = useState(false);
@@ -101,7 +99,6 @@ const homeOptions = ({ navigation }) => {
 
   const handleCloseSearch = () => {
     setSearchVisible(false);
-    navigation.navigate('Catalogo', { query: '' }); // Resetear la búsqueda
   };
 
   return {

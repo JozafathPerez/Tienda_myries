@@ -35,7 +35,6 @@ export default function App() {
           <Menu.Screen name="Historial" component={Shopping} options={otherScreenOptions} /> 
           <Menu.Screen name="Contactenos" component={Contacts} options={otherScreenOptions} />
         </Menu.Navigator>
-        <Toast ref={(ref) => React.forwardRef(ref)} />
       </NavigationContainer>
     </CartProvider>
   );
