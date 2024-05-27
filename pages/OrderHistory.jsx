@@ -68,12 +68,18 @@ export default function OrderHistory() {
 
   return (
     <StyledView className="flex-1 p-5 bg-gray-100">
-      <FlatList
-        data={orders}
-        keyExtractor={(item) => item.id.toString()}
-        renderItem={renderOrderItem}
-        contentContainerStyle={{ paddingBottom: 20 }}
-      />
+      {orders.length === 0 ? (
+        <StyledView className="flex-1 justify-center items-center">
+          <StyledText className="text-lg font-semibold">No hay pedidos en el historial</StyledText>
+        </StyledView>
+      ) : (
+        <FlatList
+          data={orders}
+          keyExtractor={(item) => item.id.toString()}
+          renderItem={renderOrderItem}
+          contentContainerStyle={{ paddingBottom: 20 }}
+        />
+      )}
     </StyledView>
   );
 }
