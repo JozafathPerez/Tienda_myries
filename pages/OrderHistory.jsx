@@ -1,33 +1,73 @@
-import React, { useContext } from "react";
-import { View, Text, FlatList } from "react-native";
+import React, { useState, useContext } from "react";
+import { View, Text, FlatList, TouchableOpacity, LayoutAnimation, UIManager, Platform } from "react-native";
 import { styled } from "nativewind";
 import { OrderContext } from '../Objects/OrderContext';
 
+if (Platform.OS === 'android') {
+  UIManager.setLayoutAnimationEnabledExperimental(true);
+}
+
 const StyledView = styled(View);
 const StyledText = styled(Text);
+const StyledTouchableOpacity = styled(TouchableOpacity);
 
 export default function OrderHistory() {
-  const { orders } = useContext(OrderContext);
+  const { orders, updateOrderStatus } = useContext(OrderContext);
+  const [expandedOrderIds, setExpandedOrderIds] = useState([]);
 
-  const renderOrderItem = ({ item }) => (
-    <StyledView className="pb-3 bg-white rounded-lg shadow-lg mb-4 border-gray-300">
-      <StyledView className="px-4 py-1 flex-row justify-between items-center mb-3 bg-slate-300 rounded-t-lg border-b border-blue-500">
-        <StyledText className="text-xl font-extrabold text text-black">Pedido #{item.id}</StyledText>
-        <StyledText className="text-sm text-gray-600">{item.date}</StyledText>
-      </StyledView>
-      <StyledText className="text-base font-semibold mb-2 mx-4">Estado: <StyledText className="text-blue-500">{item.status}</StyledText></StyledText>
-      <StyledText className="text-base font-semibold mb-2 mx-4">Productos:</StyledText>
-      {item.items.map((product, index) => (
-        <StyledView key={index} className="ml-8 mb-1">
-          <StyledText className="text-base">- {product.title} <StyledText className="font-bold">x {product.quantity}</StyledText></StyledText>
+  const handleCancelOrder = (orderId) => {
+    updateOrderStatus(orderId, 'Cancelado');
+  };
+
+  const toggleDetails = (orderId) => {
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+    setExpandedOrderIds(prevState =>
+      prevState.includes(orderId)
+        ? prevState.filter(id => id !== orderId)
+        : [...prevState, orderId]
+    );
+  };
+
+  const renderOrderItem = ({ item }) => {
+    const isExpanded = expandedOrderIds.includes(item.id);
+    const statusColor = item.status === 'Cancelado' ? 'text-red-500' : item.status === 'Entregado' ? 'text-green-500' : 'text-blue-500';
+
+    return (
+      <StyledView className="p-5 bg-slate-300 rounded-lg shadow-lg mb-4">
+        <StyledView className="flex-row justify-between items-center mb-3">
+          <StyledText className="text-xl font-bold text-black">Pedido #{item.id}</StyledText>
+          <StyledText className="text-sm text-gray-500">{item.date}</StyledText>
         </StyledView>
-      ))}
-    </StyledView>
-  );
+        <StyledText className="text-base font-semibold mb-2">
+          Estado: <StyledText className={statusColor}>{item.status}</StyledText>
+        </StyledText>
+        <StyledTouchableOpacity onPress={() => toggleDetails(item.id)} className="mb-2">
+          <Text className="text-blue-500">{isExpanded ? 'Ocultar detalles' : 'Mostrar más detalles'}</Text>
+        </StyledTouchableOpacity>
+        {isExpanded && (
+          <StyledView>
+            <StyledText className="text-base font-semibold mb-2">Productos:</StyledText>
+            {item.items.map((product, index) => (
+              <StyledView key={index} className="ml-4 mb-1">
+                <StyledText className="text-base">- {product.title} <StyledText className="font-semibold">x {product.quantity}</StyledText></StyledText>
+              </StyledView>
+            ))}
+          </StyledView>
+        )}
+        {item.status !== 'Cancelado' && item.status !== 'Entregado' && (
+          <StyledTouchableOpacity 
+            onPress={() => handleCancelOrder(item.id)}
+            className="mt-4 bg-red-500 py-2 px-4 rounded-lg"
+          >
+            <Text className="text-white text-center">Cancelar Pedido</Text>
+          </StyledTouchableOpacity>
+        )}
+      </StyledView>
+    );
+  };
 
   return (
     <StyledView className="flex-1 p-5 bg-gray-100">
-      {/* <StyledText className="text-3xl font-bold mb-5 text-center text-blue-500">Historial de Pedidos</StyledText> */}
       <FlatList
         data={orders}
         keyExtractor={(item) => item.id.toString()}

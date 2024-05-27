@@ -1,4 +1,5 @@
 import React, { createContext, useState } from 'react';
+import Order from '../Objects/Order';
 
 export const OrderContext = createContext();
 
@@ -10,7 +11,7 @@ export const OrderProvider = ({ children }) => {
   };
 
   const updateOrderStatus = (orderId, newStatus) => {
-    setOrders(orders.map(order =>
+    setOrders(orders.map(order => 
       order.id === orderId ? { ...order, status: newStatus } : order
     ));
   };
