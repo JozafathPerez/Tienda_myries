@@ -6,30 +6,30 @@ const CategoryBubbles = () => {
   return (
     <View style={{ marginTop: 30 }}>
       {/* Ceras */}
-      <View style={{height: 100, flexDirection: "row", alignItems: "center", marginBottom: 60, backgroundColor: "#FF0000", borderRadius: 10, padding: 10 }}>
+      <View className="h-28 flex-row items-center mb-16 bg-red-500 rounded-lg">
         <Image
           source={require("../Objects/Images/CeraBlanca.jpg")}
-          style={{ width: 150, height: 150, borderRadius: 75, marginRight: 50, overflow: "hidden" }}
+          style={{ width: 150, height: 150, borderRadius: 75, overflow: "hidden" }}
         />
-        <Text style={{ fontSize: 34, fontFamily: "ui-sans-serif"}}>Ceras</Text>
+        <Text className="text-4xl font-semibold ml-3 text-white">Ceras</Text>
       </View>
 
       {/* Cuchillas */}
-      <View style={{ height: 100, flexDirection: "row", alignItems: "center", marginBottom: 60, backgroundColor: "#FFFFFF", borderRadius: 10, padding: 10 }}>
+      <View className="h-28 flex-row items-center mb-16 bg-gray-500 rounded-lg">
         <Image
           source={require("../Objects/Images/Cuchilla(T-wide).jpg")}
-          style={{ width: 150, height: 150, borderRadius: 75, marginRight: 50, overflow: "hidden" }}
+          style={{ width: 150, height: 150, borderRadius: 75, overflow: "hidden" }}
         />
-        <Text style={{ fontSize: 34, fontFamily: "ui-sans-serif" }}>Cuchillas</Text>
+        <Text className="text-4xl font-semibold ml-3 text-white">Cuchillas</Text>
       </View>
 
       {/* Capas */}
-      <View style={{ height: 100, flexDirection: "row", alignItems: "center", marginBottom: 30, backgroundColor: "#0043FA", borderRadius: 10, padding: 10 }}>
+      <View className="h-28 flex-row items-center mb-16 bg-blue-500 rounded-lg">
         <Image
           source={require("../Objects/Images/Capa(Babers).jpg")}
-          style={{ width: 150, height: 150, borderRadius: 75, marginRight: 50, overflow: "hidden" }}
+          style={{ width: 150, height: 150, borderRadius: 75, overflow: "hidden" }}
         />
-        <Text style={{ fontSize: 34, fontFamily: "ui-sans-serif" }}>Capas</Text>
+        <Text className="text-4xl font-semibold ml-3 text-white">Capas</Text>
       </View>
     </View>
   );

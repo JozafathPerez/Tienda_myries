@@ -33,12 +33,15 @@ const Home = () => {
     <GestureHandlerRootView style={{ flex: 1 }}>
       <StyledSafeAreaView className="flex-1 mx-2">
         <StyledScrollView contentContainerStyle={{ paddingBottom: 20 }}>
-          <StyledText className="text-3xl font-bold text-center mb-5 my-5 font-sans " style = {{ fontFamily: "ui-sans-serif"}}> 
+          <StyledText className="text-3xl font-bold text-center mb-5 my-5"> 
             Tienda Myries
           </StyledText>
-          <ImageCarousel images={localImages} />
+          <ImageCarousel images={localImages}/>
+          <StyledText className="text-2xl font-bold text-center mt-10 mb-5"> 
+            Categorías
+          </StyledText>
           <CategoryBubbles />
-          <StyledText className="text-3xl font-bold text-center mb-5 my-5 font-sans " style = {{ fontFamily: "ui-sans-serif"}}> 
+          <StyledText className="text-2xl font-bold text-center mb-5 my-5"> 
             Los productos más populares
           </StyledText>
           <HorizontalProductsList products={popularProducts} />
