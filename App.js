@@ -33,7 +33,7 @@ export default function App() {
           <Menu.Navigator initialRouteName='Inicio' screenOptions={{ drawerPosition: 'right' }}>
             <Menu.Screen name="Cuenta" component={Account} options={accountOptions} />
             <Menu.Screen name="Inicio" component={Home} options={homeOptions} />
-            <Menu.Screen name="Catalogo" component={Catalog} options={catalogOptions} />
+            <Menu.Screen name="Catálogo" component={Catalog} options={catalogOptions} />
             <Menu.Screen name="Carrito" component={Cart} options={cartOptions} /> 
             <Menu.Screen name="Historial" component={OrderHistory} options={otherScreenOptions} /> 
             <Menu.Screen name="Contactenos" component={Contacts} options={otherScreenOptions} />

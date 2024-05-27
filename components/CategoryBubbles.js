@@ -1,5 +1,6 @@
 import React from "react";
 import { View, Image, Text } from "react-native";
+import { styled } from "nativewind";
 
 const CategoryBubbles = () => {
   return (
@@ -10,7 +11,7 @@ const CategoryBubbles = () => {
           source={require("../Objects/Images/CeraBlanca.jpg")}
           style={{ width: 150, height: 150, borderRadius: 75, marginRight: 50, overflow: "hidden" }}
         />
-        <Text style={{ fontSize: 34, fontFamily: "Apple Color Emoji"}}>Ceras</Text>
+        <Text style={{ fontSize: 34, fontFamily: "ui-sans-serif"}}>Ceras</Text>
       </View>
 
       {/* Cuchillas */}
@@ -19,7 +20,7 @@ const CategoryBubbles = () => {
           source={require("../Objects/Images/Cuchilla(T-wide).jpg")}
           style={{ width: 150, height: 150, borderRadius: 75, marginRight: 50, overflow: "hidden" }}
         />
-        <Text style={{ fontSize: 34, fontFamily: "Apple Color Emoji" }}>Cuchillas</Text>
+        <Text style={{ fontSize: 34, fontFamily: "ui-sans-serif" }}>Cuchillas</Text>
       </View>
 
       {/* Capas */}
@@ -28,7 +29,7 @@ const CategoryBubbles = () => {
           source={require("../Objects/Images/Capa(Babers).jpg")}
           style={{ width: 150, height: 150, borderRadius: 75, marginRight: 50, overflow: "hidden" }}
         />
-        <Text style={{ fontSize: 34, fontFamily: "Apple Color Emoji" }}>Capas</Text>
+        <Text style={{ fontSize: 34, fontFamily: "ui-sans-serif" }}>Capas</Text>
       </View>
     </View>
   );
