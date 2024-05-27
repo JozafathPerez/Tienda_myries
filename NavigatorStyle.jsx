@@ -1,7 +1,9 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { View, Image, StyleSheet, Text } from "react-native";
 import { Ionicons } from "@expo/vector-icons"; 
 import { CartContext } from './Objects/CartContext';
+import SearchBar from './components/SearchBar';
+
 
 const Logo = () => (
   <Image
@@ -86,20 +88,80 @@ const cartOptions = ({ navigation }) => {
   };
 };
 
+
+
 const homeOptions = ({ navigation }) => {
   const options = commonHeaderOptions({ navigation });
+  const [searchVisible, setSearchVisible] = useState(false);
+
+  const handleSearch = (query) => {
+    setSearchVisible(false);
+    navigation.navigate('Catalogo', { query });
+  };
+
+  const handleCloseSearch = () => {
+    setSearchVisible(false);
+    navigation.navigate('Catalogo', { query: '' }); // Resetear la búsqueda
+  };
+
   return {
     ...options,
+    headerTitle: searchVisible ? '' : 'Inicio',
     headerRight: () => (
       <IconContainer>
-        <Ionicons 
-          name="search-outline" 
-          size={30} 
-          color="black" 
-          onPress={() => navigation.navigate('Buscar')} 
-          style={{ marginRight: 20 }}
-        />
-        <CartIcon navigation={navigation} />
+        {searchVisible ? (
+          <SearchBar onSearch={handleSearch} onClose={handleCloseSearch} />
+        ) : (
+          <>
+            <Ionicons 
+              name="search-outline" 
+              size={30} 
+              color="black" 
+              onPress={() => setSearchVisible(true)} 
+              style={{ marginRight: 20 }}
+            />
+            <CartIcon navigation={navigation} />
+          </>
+        )}
+        {options.headerRight()}
+      </IconContainer>
+    ),
+  };
+};
+
+const catalogOptions = ({ navigation }) => {
+  const options = commonHeaderOptions({ navigation });
+  const [searchVisible, setSearchVisible] = useState(false);
+
+  const handleSearch = (query) => {
+    setSearchVisible(false);
+    navigation.setParams({ query });
+  };
+
+  const handleCloseSearch = () => {
+    setSearchVisible(false);
+    navigation.setParams({ query });
+  };
+
+  return {
+    ...options,
+    headerTitle: searchVisible ? '' : 'Catalogo',
+    headerRight: () => (
+      <IconContainer>
+        {searchVisible ? (
+          <SearchBar onSearch={handleSearch} onClose={handleCloseSearch} />
+        ) : (
+          <>
+            <Ionicons 
+              name="search-outline" 
+              size={30} 
+              color="black" 
+              onPress={() => setSearchVisible(true)} 
+              style={{ marginRight: 20 }}
+            />
+            <CartIcon navigation={navigation} />
+          </>
+        )}
         {options.headerRight()}
       </IconContainer>
     ),
@@ -148,4 +210,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export { cartOptions, homeOptions, otherScreenOptions, accountOptions };
+export { cartOptions, homeOptions, otherScreenOptions, accountOptions, catalogOptions };
