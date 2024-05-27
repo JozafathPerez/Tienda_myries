@@ -15,6 +15,7 @@ import Contacts from "./pages/Contacts";
 import Account from "./pages/Account";
 import Catalog from "./pages/Catalog";
 import Cart from "./pages/Cart";
+import Shopping from "./pages/Shopping";
 import { CartProvider } from "./Objects/CartContext";
 
 // Import del estilo de la barra de navegador y mensajes tipo toast
@@ -31,6 +32,7 @@ export default function App() {
           <Menu.Screen name="Inicio" component={Home} options={homeOptions} />
           <Menu.Screen name="Catalogo" component={Catalog} options={homeOptions} />
           <Menu.Screen name="Carrito" component={Cart} options={cartOptions} /> 
+          <Menu.Screen name="Historial" component={Shopping} options={otherScreenOptions} /> 
           <Menu.Screen name="Contactenos" component={Contacts} options={otherScreenOptions} />
         </Menu.Navigator>
         <Toast ref={(ref) => React.forwardRef(ref)} />

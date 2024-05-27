@@ -67,6 +67,25 @@ const commonHeaderOptions = ({ navigation }) => ({
   drawerIcon: () => false,
 });
 
+const cartOptions = ({ navigation }) => {
+  const options = commonHeaderOptions({ navigation });
+  return {
+    ...options,
+    headerRight: () => (
+      <IconContainer>
+        <Ionicons 
+          name="reader-outline"
+          size={30} 
+          color="black" 
+          onPress={() => navigation.navigate('Historial')} 
+          style={{ marginRight: 20 }}
+        />
+        {options.headerRight()}
+      </IconContainer>
+    ),
+  };
+};
+
 const homeOptions = ({ navigation }) => {
   const options = commonHeaderOptions({ navigation });
   return {
@@ -120,7 +139,6 @@ const accountOptions = ({ navigation }) => {
   };
 };
 
-const cartOptions = commonHeaderOptions;
 
 const styles = StyleSheet.create({
   iconContainer: {
