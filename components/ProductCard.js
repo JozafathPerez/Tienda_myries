@@ -1,27 +1,36 @@
-import { React, useContext } from "react";
-import { View, Text, Image, TouchableOpacity } from "react-native";
+import React, { useState, useContext } from "react";
+import { View, Text, Image, TouchableOpacity, Modal } from "react-native";
 import { styled } from "nativewind";
 import { CartContext } from '../Objects/CartContext';
-import Toast from 'react-native-toast-message';
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
 const StyledImage = styled(Image);
+const StyledTouchableOpacity = styled(TouchableOpacity);
 
-export default function ProductCard({ id, image, category, title, price }) {
+export default function ProductCard({ id, image, category, title, price, description }) {
   const { addToCart } = useContext(CartContext);
+  const [modalVisible, setModalVisible] = useState(false);
 
   const handleAddToCart = () => {
     addToCart({ id, image, category, title, price });
   };
 
+  const openModal = () => {
+    setModalVisible(true);
+  };
+
+  const closeModal = () => {
+    setModalVisible(false);
+  };
+
   return (
-    <StyledView className="flex-1 w-1/2 p-2 bg-slate-300 rounded-2xl m-2">
+    <StyledTouchableOpacity onPress={openModal} className="flex-1 w-1/2 p-2 bg-slate-300 rounded-2xl m-2">
       <StyledView className="rounded-2xl overflow-hidden">
         <StyledImage 
           source={image} 
           className="h-40 w-30" 
-          resizeMode="object-scale-down" 
+          resizeMode="cover" // Cambiado a 'cover' para agrandar la imagen en el modal sin cortes
           style={{ height: 160, width: 155 }}
         />
       </StyledView>
@@ -38,6 +47,35 @@ export default function ProductCard({ id, image, category, title, price }) {
       >
         <StyledText className="text-white text-center">Añadir al Carrito</StyledText>
       </TouchableOpacity>
-    </StyledView>
+      <Modal
+        animationType="fade"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={closeModal}
+      >
+        <StyledView className="flex-1 justify-center items-center bg-black/25">
+          <StyledView className="bg-white p-8 rounded-lg w-11/12">
+            <StyledTouchableOpacity onPress={closeModal} className="absolute top-1 right-3 max-h-full">
+              <StyledText className="text-gray-700 text-lg">X</StyledText>
+            </StyledTouchableOpacity>
+            <StyledView className="rounded-2xl overflow-hidden justify-center items-center">
+              <StyledImage 
+                source={image} 
+                className="h-40 w-30" 
+                resizeMode="cover" // Cambiado a 'cover' para agrandar la imagen en el modal sin cortes
+                style={{ height: 160, width: 155 }}
+              />
+            </StyledView>
+            <StyledView className="">
+              <StyledText className="text-2xl mb-1 font-extrabold">{title}</StyledText>
+              <StyledText className="text-sm mb-1 font-light">Categoria: {category}</StyledText>
+              <StyledText className="text-lg mb-4 font-bold">₡ {price}</StyledText>
+              <StyledText className="text-base">{description}</StyledText>
+            </StyledView>
+          </StyledView>
+        </StyledView>
+
+      </Modal>
+    </StyledTouchableOpacity>
   );
 }
