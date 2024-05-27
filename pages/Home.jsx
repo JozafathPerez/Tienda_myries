@@ -1,8 +1,21 @@
 import React from "react";
-import { SafeAreaView, Text } from "react-native";
+import { SafeAreaView, Text, Image, ScrollView } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import ProductsList from "../components/ProductsList";
+import HorizontalProductsList from "../components/HorizontalProductsList";
+import ImageCarousel from "../components/ImageCarousel";
+import CategoryBubbles from "../components/CategoryBubbles";
 import { Products } from "../Objects/Products";
+import { styled } from "nativewind";
+
+const StyledSafeAreaView = styled(SafeAreaView);
+const StyledText = styled(Text);
+const StyledImage = styled(Image);
+const StyledScrollView = styled(ScrollView);
+
+// Importar imágenes locales
+const image1 = require('../Objects/Images/Tienda.jpg');
+const image2 = require('../Objects/Images/Anuncio.jpg');
+const image3 = require('../Objects/Images/Anuncio2.jpg');
 
 const Home = () => {
   // IDs de los productos más populares
@@ -13,14 +26,24 @@ const Home = () => {
     popularProductIds.includes(product.id)
   );
 
+  // Arreglo de imágenes locales
+  const localImages = [image1, image2, image3];
+
   return (
-    <GestureHandlerRootView>
-      <SafeAreaView style={{ flex: 1, marginHorizontal: 10 }}>
-        <Text style={{ fontSize: 18, fontWeight: "bold", marginBottom: 10 }}>
-          Los productos más populares
-        </Text>
-        <ProductsList products={popularProducts} />
-      </SafeAreaView>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <StyledSafeAreaView className="flex-1 mx-2">
+        <StyledScrollView contentContainerStyle={{ paddingBottom: 20 }}>
+          <StyledText className="text-lg font-bold mb-2">
+            Tienda Myries
+          </StyledText>
+          <ImageCarousel images={localImages} />
+          <CategoryBubbles />
+          <StyledText className="text-lg font-bold my-5">
+            Los productos más populares
+          </StyledText>
+          <HorizontalProductsList products={popularProducts} />
+        </StyledScrollView>
+      </StyledSafeAreaView>
     </GestureHandlerRootView>
   );
 };
