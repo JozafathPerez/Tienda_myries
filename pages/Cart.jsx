@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { View, Text, TouchableOpacity, FlatList } from 'react-native';
 import { SafeAreaView } from "react-native-safe-area-context";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
@@ -11,7 +11,7 @@ import { styled } from 'nativewind';
 const StyledTouchableOpacity = styled(TouchableOpacity);
 
 const Cart = () => {
-  const { cart, clearCart } = useContext(CartContext);
+  const { cart, confirmPayment } = useContext(CartContext);
 
   // Calcular la suma de subtotales
   const subtotal = cart.reduce((total, product) => total + (product.price * product.quantity), 0);
@@ -28,9 +28,8 @@ const Cart = () => {
   };
 
   const handlePaymentConfirmation = () => {
+    confirmPayment();
     toggleModal();
-    alert('Pago Confirmado');
-    clearCart();
   };
 
   return (
