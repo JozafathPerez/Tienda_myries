@@ -1,14 +1,17 @@
-import React, { useState } from "react";
-import { SafeAreaView, View } from "react-native";
+import React, { useState, useEffect } from "react";
+import { SafeAreaView, View, Text, TouchableOpacity } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import RNPickerSelect from "react-native-picker-select";
+import { Ionicons } from '@expo/vector-icons';
 import ProductsList from "../components/ProductsList";
 import { Products } from "../Objects/Products";
 
-const Catalog = () => {
+const Catalog = ({ route }) => {
   const [selectedCategory, setSelectedCategory] = useState('');
   const [sortByPrice, setSortByPrice] = useState(null);
   const [originalProducts, setOriginalProducts] = useState(Products);
+  const [filteredProducts, setFilteredProducts] = useState(Products);
+  const [searchQuery, setSearchQuery] = useState('');
 
   const categories = [
     { label: "Todas", value: '' },
@@ -17,23 +20,33 @@ const Catalog = () => {
     { label: "Capas", value: "Capas" }
   ];
 
-  let filteredProducts = originalProducts;
+  useEffect(() => {
+    if (route.params?.query !== undefined) {
+      setSearchQuery(route.params.query);
+    }
+  }, [route.params?.query]);
 
-  // Aplicar filtro por categoría si no es "Todas"
-  if (selectedCategory && selectedCategory !== '') {
-    filteredProducts = originalProducts.filter(product => product.category === selectedCategory);
-  }
+  useEffect(() => {
+    let filtered = originalProducts;
 
-  // Aplicar filtro de orden por precio
-  if (sortByPrice !== null) {
-    filteredProducts = [...filteredProducts].sort((a, b) => {
-      if (sortByPrice) {
-        return b.price - a.price; // Mayor a menor precio
-      } else {
-        return a.price - b.price; // Menor a mayor precio
-      }
-    });
-  }
+    if (selectedCategory && selectedCategory !== '') {
+      filtered = filtered.filter(product => product.category === selectedCategory);
+    }
+
+    if (sortByPrice !== null) {
+      filtered = filtered.sort((a, b) => sortByPrice ? b.price - a.price : a.price - b.price);
+    }
+
+    if (searchQuery) {
+      filtered = filtered.filter(product => product.title.toLowerCase().includes(searchQuery.toLowerCase()));
+    }
+
+    setFilteredProducts(filtered);
+  }, [selectedCategory, sortByPrice, searchQuery, originalProducts]);
+
+  const handleClearSearch = () => {
+    setSearchQuery('');
+  };
 
   return (
     <GestureHandlerRootView>
@@ -55,6 +68,16 @@ const Catalog = () => {
             placeholder={{ label: "Ordenar por precio", value: null }}
           />
         </View>
+        {searchQuery ? (
+          <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
+            <Text style={{ fontSize: 18, marginRight: 10 }}>
+              Resultados para "{searchQuery}"
+            </Text>
+            <TouchableOpacity onPress={handleClearSearch}>
+              <Ionicons name="trash-outline" size={24} color="black" />
+            </TouchableOpacity>
+          </View>
+        ) : null}
         <ProductsList products={filteredProducts} />
       </SafeAreaView>
     </GestureHandlerRootView>
