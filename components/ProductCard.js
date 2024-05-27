@@ -1,7 +1,9 @@
 import React, { useState, useContext } from "react";
-import { View, Text, Image, TouchableOpacity, Modal } from "react-native";
+import { View, Text, Image, TouchableOpacity, Modal, Dimensions } from "react-native";
 import { styled } from "nativewind";
 import { CartContext } from '../Objects/CartContext';
+
+const { width } = Dimensions.get("window");
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
@@ -29,9 +31,8 @@ export default function ProductCard({ id, image, category, title, price, descrip
       <StyledView className="rounded-2xl overflow-hidden">
         <StyledImage 
           source={image} 
-          className="h-40 w-30" 
-          resizeMode="cover" // Cambiado a 'cover' para agrandar la imagen en el modal sin cortes
-          style={{ height: 160, width: 155 }}
+          className="h-40 w-full" 
+          resizeMode="cover" 
         />
       </StyledView>
       <StyledView className="mt-5">
@@ -61,12 +62,11 @@ export default function ProductCard({ id, image, category, title, price, descrip
             <StyledView className="rounded-2xl overflow-hidden justify-center items-center">
               <StyledImage 
                 source={image} 
-                className="h-40 w-30" 
-                resizeMode="cover" // Cambiado a 'cover' para agrandar la imagen en el modal sin cortes
-                style={{ height: 160, width: 155 }}
+                className="h-40 w-full" 
+                resizeMode="cover" 
               />
             </StyledView>
-            <StyledView className="">
+            <StyledView>
               <StyledText className="text-2xl mb-1 font-extrabold">{title}</StyledText>
               <StyledText className="text-sm mb-1 font-light">Categoria: {category}</StyledText>
               <StyledText className="text-lg mb-4 font-bold">₡ {price}</StyledText>
@@ -74,7 +74,6 @@ export default function ProductCard({ id, image, category, title, price, descrip
             </StyledView>
           </StyledView>
         </StyledView>
-
       </Modal>
     </StyledTouchableOpacity>
   );
