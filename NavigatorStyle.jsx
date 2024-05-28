@@ -207,4 +207,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export { cartOptions, homeOptions, otherScreenOptions, accountOptions, catalogOptions };
+export { cartOptions, homeOptions, otherScreenOptions, accountOptions, catalogOptions, commonHeaderOptions };
