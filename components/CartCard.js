@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { View, Text, Image, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, Image, TextInput, TouchableOpacity, useWindowDimensions } from 'react-native';
 import { CartContext } from '../Objects/CartContext';
 
 export default function CartCard({ product }) {
@@ -27,9 +27,13 @@ export default function CartCard({ product }) {
 
   const subtotal = product.price * quantity;
 
+  const { width } = useWindowDimensions();
+  const isWideScreen = width >= 768;
+
   return (
-    <View className="p-4 bg-slate-300 rounded-2xl m-2">
-      <View className="flex-row">
+    <View className="flex-1 p-4 bg-slate-300 rounded-2xl m-2 sm:flex-row sm:justify-between space-x-4">
+      {/* imagen, titulo y categoria */}
+      <View className="flex-row sm:w-1/3">
         <View className="h-20 w-20 rounded-2xl overflow-hidden">
           <Image 
             source={product.image} 
@@ -42,7 +46,8 @@ export default function CartCard({ product }) {
           <Text>{product.category}</Text>
         </View>
       </View>
-      <View className="mt-5">
+      {/* info de prrecios y cantidad */}
+      <View className="mt-5 sm:mt-0">
         <Text className="text-xl font-bold">₡ {product.price.toFixed(2)}</Text>
         <View className="flex-row items-center mt-2">
           <Text className="mr-2">Cantidad:</Text>
@@ -61,9 +66,10 @@ export default function CartCard({ product }) {
         </View>
         <Text className="mt-2 text-lg font-bold">Subtotal: ₡ {subtotal.toFixed(2)}</Text>
       </View>
+      {/* Boton de cancelar */}
       <TouchableOpacity 
         onPress={() => removeFromCart(product.id)} 
-        className="mt-4 bg-red-500 py-2 px-4 rounded-lg"
+        className="mt-4 bg-red-500 rounded-lg justify-center content-center sm:mt-8 sm:h-10 p-2"
       >
         <Text className="text-white text-center">Eliminar</Text>
       </TouchableOpacity>

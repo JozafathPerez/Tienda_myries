@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { View, Text, TouchableOpacity, FlatList } from 'react-native';
+import { View, Text, TouchableOpacity, FlatList, useWindowDimensions } from 'react-native';
 import { SafeAreaView } from "react-native-safe-area-context";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import Modal from 'react-native-modal';
@@ -34,6 +34,10 @@ const Cart = () => {
     toggleModal();
   };
 
+  const { width } = useWindowDimensions();
+  const { height } = useWindowDimensions();
+  const isWideScreen = width >= 768;
+
   return (
     <GestureHandlerRootView>
       <SafeAreaView className="flex-1 mx-5">
@@ -42,13 +46,16 @@ const Cart = () => {
             <StyledText className="text-lg font-semibold text-center">El carrito está vacío, añade productos desde el catalogo!</StyledText>
           </StyledView>
         ) : (
-          <>
-            <FlatList
-              data={cart}
-              keyExtractor={(item) => item.id.toString()}
-              renderItem={({ item }) => <CartCard product={item} />}
-            />
-            <StyledView className="mt-5 p-4 bg-white rounded-lg shadow-lg">
+          <StyledView className={isWideScreen ? "flex-row" : "flex-1"}>
+            <StyledView className={isWideScreen ? "flex-1" : "flex-1"} style={{maxHeight: (isWideScreen ? height - 110 : 'fit-content')}}>
+              <FlatList
+                data={cart}
+                keyExtractor={(item) => item.id.toString()}
+                renderItem={({ item }) => <CartCard product={item} />}
+                scrollToOverflowEnabled
+              /> 
+            </StyledView>
+            <View className={isWideScreen ? "flex my-2 p-4 bg-white rounded-lg shadow-lg" : "flex p-4 bg-white rounded-lg shadow-lg"}>
               <StyledText className="text-lg font-bold mb-2">Resumen del Pedido</StyledText>
               <StyledView className="flex-row justify-between">
                 <StyledText className="text-base">Subtotal:</StyledText>
@@ -58,7 +65,7 @@ const Cart = () => {
                 <StyledText className="text-base">Impuestos:</StyledText>
                 <StyledText className="text-base">₡ {taxes.toFixed(2)}</StyledText>
               </StyledView>
-              <StyledView className="flex-row justify-between">
+              <StyledView className="flex-row justify-between space-x-5">
                 <StyledText className="text-base">Gastos de Envío:</StyledText>
                 <StyledText className="text-base">₡ {shippingCost.toFixed(2)}</StyledText>
               </StyledView>
@@ -72,8 +79,8 @@ const Cart = () => {
               >
                 <StyledText className="text-white text-center">Confirmar Pago</StyledText>
               </StyledTouchableOpacity>
-            </StyledView>
-          </>
+            </View>
+          </StyledView>
         )}
 
         <Modal isVisible={isModalVisible}>
