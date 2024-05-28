@@ -1,5 +1,5 @@
 import * as React from "react";
-import { View, Text, TextInput, TouchableOpacity } from "react-native";
+import { View, Text, TextInput, TouchableOpacity, useWindowDimensions, Platform } from "react-native";
 import { styled } from "nativewind";
 
 const StyledView = styled(View);
@@ -8,6 +8,10 @@ const StyledTextInput = styled(TextInput);
 const StyledTouchableOpacity = styled(TouchableOpacity);
 
 export default function Account() {
+  const { width } = useWindowDimensions();
+  const isWeb = Platform.OS === "web";
+  const inputWidth = isWeb ? width / 3 : '100%'; // Ancho de los inputs para web y dispositivos móviles
+
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [isLogin, setIsLogin] = React.useState(true); // Estado para controlar la vista de inicio de sesión o registro
@@ -26,48 +30,56 @@ export default function Account() {
         {isLogin ? "Iniciar Sesión" : "Registrarse"}
       </StyledText>
       <StyledTextInput
-        className="w-full h-10 border border-gray-300 rounded px-3 mb-3"
+        className="h-10 border border-gray-300 rounded px-3 mb-3"
         placeholder="Correo electrónico"
         value={email}
         onChangeText={setEmail}
         keyboardType="email-address"
+        style={{ width: inputWidth }}
       />
       <StyledTextInput
-        className="w-full h-10 border border-gray-300 rounded px-3 mb-3"
+        className="h-10 border border-gray-300 rounded px-3 mb-3"
         placeholder="Contraseña"
         value={password}
         onChangeText={setPassword}
         secureTextEntry={true}
+        style={{ width: inputWidth }}
       />
       {!isLogin && (
         <>
           <StyledTextInput
-            className="w-full h-10 border border-gray-300 rounded px-3 mb-3"
+            className="h-10 border border-gray-300 rounded px-3 mb-3"
             placeholder="Nombre"
+            style={{ width: inputWidth }}
           />
           <StyledTextInput
-            className="w-full h-10 border border-gray-300 rounded px-3 mb-3"
+            className="h-10 border border-gray-300 rounded px-3 mb-3"
             placeholder="Apellido"
+            style={{ width: inputWidth }}
           />
           <StyledTextInput
-            className="w-full h-10 border border-gray-300 rounded px-3 mb-3"
+            className="h-10 border border-gray-300 rounded px-3 mb-3"
             placeholder="Teléfono"
             keyboardType="phone-pad"
+            style={{ width: inputWidth }}
           />
           <StyledTextInput
-            className="w-full h-10 border border-gray-300 rounded px-3 mb-3"
+            className="h-10 border border-gray-300 rounded px-3 mb-3"
             placeholder="Fecha de Nacimiento (DD/MM/AAAA)"
             keyboardType="numbers-and-punctuation"
+            style={{ width: inputWidth }}
           />
           <StyledTextInput
-            className="w-full h-10 border border-gray-300 rounded px-3 mb-3"
+            className="h-10 border border-gray-300 rounded px-3 mb-3"
             placeholder="Dirección"
+            style={{ width: inputWidth }}
           />
         </>
       )}
       <StyledTouchableOpacity
-        className={isLogin ? "bg-blue-500 py-2 px-4 rounded w-full mb-3" : "bg-green-500 py-2 px-4 rounded w-full mb-3"}
+        className={`py-2 px-4 rounded ${isLogin ? 'bg-blue-500' : 'bg-green-500'} mb-3`}
         onPress={isLogin ? handleLogin : handleRegister}
+        style={{ width: inputWidth }}
       >
         <StyledText className="text-white text-center">
           {isLogin ? "Iniciar Sesión" : "Registrarse"}
