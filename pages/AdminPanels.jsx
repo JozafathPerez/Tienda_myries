@@ -1,32 +1,34 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import Catalog from './Catalog'; 
+import OrderHistory from './OrderHistory';
+import ClientList from '../components/ClientList'; // Importa el componente ClientLis
 
 const ModificarProductosScreen = () => {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Página de Modificar Productos</Text>
-      {/* Aquí puedes añadir el contenido específico de esta pantalla */}
+        <Catalog /> 
     </View>
   );
 };
 
 const VerPerdidosScreen = () => {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Página de Ver Perdidos</Text>
-      {/* Contenido de la pantalla de Ver Perdidos */}
-    </View>
-  );
-};
+    return (
+      <View style={styles.container}>
+        <OrderHistory /> 
+      </View>
+    );
+  };
 
-const ModificarClientesScreen = () => {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Página de Modificar Clientes</Text>
-      {/* Contenido de la pantalla de Modificar Clientes */}
-    </View>
-  );
-};
+  const ModificarClientesScreen = () => {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.title}>Página de Modificar Clientes</Text>
+        {/* Muestra el componente ClientList */}
+        <ClientList />
+      </View>
+    );
+  };
 
 const styles = StyleSheet.create({
   container: {

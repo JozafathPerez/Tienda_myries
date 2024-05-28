@@ -26,16 +26,16 @@ const Catalog = ({ route }) => {
   ];
 
   useEffect(() => {
-    if (route.params?.query !== undefined) {
+    if (route?.params?.query !== undefined) {
       setSearchQuery(route.params.query);
     }
-  }, [route.params?.query]);
+  }, [route?.params?.query]);  
 
   useEffect(() => {
     let filtered = originalProducts;
 
     if (selectedCategory && selectedCategory !== '') {
-      filtered = filtered.filter(product => product.price === selectedCategory);
+      filtered = filtered.filter(product => product.category === selectedCategory);
     }
 
     if (sortByPrice === 'normal') {
