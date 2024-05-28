@@ -26,6 +26,8 @@ export default function ProductCard({ id, image, category, title, price, descrip
     setModalVisible(false);
   };
 
+  const windowWidth = Dimensions.get('window').width;
+
   return (
     <StyledTouchableOpacity onPress={openModal} className="flex-1 w-1/2 p-2 bg-slate-300 rounded-2xl m-2">
       <StyledView className="rounded-2xl overflow-hidden">
@@ -55,18 +57,18 @@ export default function ProductCard({ id, image, category, title, price, descrip
         onRequestClose={closeModal}
       >
         <StyledView className="flex-1 justify-center items-center bg-black/25">
-          <StyledView className="bg-white p-8 rounded-lg w-11/12">
+          <StyledView className="bg-white p-8 rounded-lg w-11/12 max-w-4xl">
             <StyledTouchableOpacity onPress={closeModal} className="absolute top-1 right-3 max-h-full">
               <StyledText className="text-gray-700 text-lg">X</StyledText>
             </StyledTouchableOpacity>
-            <StyledView className="rounded-2xl overflow-hidden justify-center items-center">
-              <StyledImage 
+            <View className="rounded-2xl overflow-hidden justify-center items-center" style={{ width: '100%', height: windowWidth * 0.45, maxHeight: 400 }}>
+              <Image 
                 source={image} 
-                className="h-40 w-full" 
-                resizeMode="cover" 
+                style={{ height: '100%', width: '100%' }}
+                resizeMode="contain" 
               />
-            </StyledView>
-            <StyledView>
+            </View>
+            <StyledView className="mt-4">
               <StyledText className="text-2xl mb-1 font-extrabold">{title}</StyledText>
               <StyledText className="text-sm mb-1 font-light">Categoria: {category}</StyledText>
               <StyledText className="text-lg mb-4 font-bold">₡ {price}</StyledText>
