@@ -11,12 +11,12 @@ const StyledView = styled(View);
 
 const Catalog = ({ route }) => {
   const [selectedCategory, setSelectedCategory] = useState('');
-  const [sortByPrice, setSortByPrice] = useState(null);
+  const [sortByPrice, setSortByPrice] = useState('normal');
   const [originalProducts, setOriginalProducts] = useState(Products);
   const [filteredProducts, setFilteredProducts] = useState(Products);
   const [searchQuery, setSearchQuery] = useState('');
   const { width } = useWindowDimensions();
-  const isWideScreen = width >= 768; // 768px es un ancho común para tablets o vistas web
+  const isWideScreen = width >= 768;
 
   const categories = [
     { label: "Todas", value: '' },
@@ -35,11 +35,15 @@ const Catalog = ({ route }) => {
     let filtered = originalProducts;
 
     if (selectedCategory && selectedCategory !== '') {
-      filtered = filtered.filter(product => product.category === selectedCategory);
+      filtered = filtered.filter(product => product.price === selectedCategory);
     }
 
-    if (sortByPrice !== null) {
-      filtered = filtered.sort((a, b) => sortByPrice ? b.price - a.price : a.price - b.price);
+    if (sortByPrice === 'normal') {
+      filtered = filtered.sort((a, b) => a.id - b.id); 
+    } else if (sortByPrice === 'asc') {
+      filtered = filtered.sort((a, b) => a.price - b.price);
+    } else if (sortByPrice === 'desc') {
+      filtered = filtered.sort((a, b) => b.price - a.price);
     }
 
     if (searchQuery) {
@@ -48,6 +52,23 @@ const Catalog = ({ route }) => {
 
     setFilteredProducts(filtered);
   }, [selectedCategory, sortByPrice, searchQuery, originalProducts]);
+
+  useEffect(() => {
+    // Este efecto se ejecuta cuando cambia sortByPrice para forzar la actualización de la ordenación
+    setFilteredProducts(prevProducts => {
+      let updatedFilteredProducts = [...prevProducts];
+
+      if (sortByPrice === 'normal') {
+        updatedFilteredProducts = updatedFilteredProducts.sort((a, b) => a.id - b.id); 
+      } else if (sortByPrice === 'asc') {
+        updatedFilteredProducts = updatedFilteredProducts.sort((a, b) => a.price - b.price);
+      } else if (sortByPrice === 'desc') {
+        updatedFilteredProducts = updatedFilteredProducts.sort((a, b) => b.price - a.price);
+      }
+
+      return updatedFilteredProducts;
+    });
+  }, [sortByPrice]);
 
   const handleClearSearch = () => {
     setSearchQuery('');
@@ -66,12 +87,15 @@ const Catalog = ({ route }) => {
           </StyledView>
           <StyledView className={isWideScreen ? "flex-1 ml-2" : ""}>
             <RNPickerSelect
-              onValueChange={(value) => setSortByPrice(value)}
+              onValueChange={(value) => {
+                setSortByPrice(value);
+              }}
               items={[
-                { label: "Menor a mayor precio", value: false },
-                { label: "Mayor a menor precio", value: true }
+                { label: "Orden normal", value: 'normal' },
+                { label: "Menor a mayor precio", value: 'asc' },
+                { label: "Mayor a menor precio", value: 'desc' },
               ]}
-              placeholder={{ label: "Ordenar por precio", value: null }}
+              placeholder={{ label: "Selecciona un orden de precio", value: 'null' }}
             />
           </StyledView>
         </StyledView>

@@ -32,6 +32,15 @@ const ImageCarousel = ({ images }) => {
     }
   }, [width, height]);
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const nextIndex = (currentIndex + 1) % images.length;
+      scrollToIndex(nextIndex);
+    }, 10000); // Cambiar cada 10 segundos
+
+    return () => clearInterval(interval);
+  }, [currentIndex]);
+
   const onViewRef = useRef(({ viewableItems }) => {
     if (viewableItems.length > 0) {
       setCurrentIndex(viewableItems[0].index);
