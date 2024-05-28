@@ -1,32 +1,21 @@
 import React, { useRef, useState } from "react";
-import { View, FlatList, TouchableOpacity } from "react-native";
+import { View, FlatList, useWindowDimensions } from "react-native";
 import { styled } from "nativewind";
 import ProductCard from "./ProductCard";
-import { Ionicons } from "@expo/vector-icons"; // Importa los iconos de Ionicons
 
 const StyledView = styled(View);
-const StyledIcon = styled(Ionicons); // Estiliza el componente de icono
-const StyledTouchableOpacity = styled(TouchableOpacity);
 
 const HorizontalProductsList = ({ products }) => {
   const flatListRef = useRef(null);
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const { width } = useWindowDimensions();
 
-  const onViewableItemsChanged = useRef(({ viewableItems }) => {
-    if (viewableItems.length > 0) {
-      setCurrentIndex(viewableItems[0].index);
-    }
-  });
-
-  const scrollLeft = () => {
-    if (currentIndex > 0) {
-      flatListRef.current.scrollToIndex({ index: currentIndex - 1 });
-    }
-  };
-
-  const scrollRight = () => {
-    if (currentIndex < products.length - 1) {
-      flatListRef.current.scrollToIndex({ index: currentIndex + 1 });
+  const getItemWidth = () => {
+    if (width < 768) {
+      return width * 0.8;
+    } else if (width < 1024) {
+      return width * 0.5;
+    } else {
+      return width * 0.33;
     }
   };
 
@@ -36,30 +25,15 @@ const HorizontalProductsList = ({ products }) => {
         ref={flatListRef}
         data={products}
         keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) => <ProductCard {...item} />}
+        renderItem={({ item }) => <ProductCard {...item} style={{ width: getItemWidth() }} />}
         horizontal
-        showsHorizontalScrollIndicator={false}
+        showsHorizontalScrollIndicator={true} // Mostrar el indicador de scroll horizontal
         pagingEnabled
         contentContainerStyle={{ paddingHorizontal: 10 }}
-        onViewableItemsChanged={onViewableItemsChanged.current}
-        viewabilityConfig={{ viewAreaCoveragePercentThreshold: 50 }}
+        snapToAlignment="start"
+        snapToInterval={getItemWidth()}
+        decelerationRate="fast"
       />
-      <StyledView className="flex-row justify-between mt-4">
-        <StyledTouchableOpacity onPress={scrollLeft} className="pr-10">
-          <StyledIcon
-            name="arrow-back-outline"
-            size={40}
-            color="black"
-          />
-        </StyledTouchableOpacity>
-        <StyledTouchableOpacity onPress={scrollRight} className="pl-10">
-          <StyledIcon
-            name="arrow-forward-outline"
-            size={40}
-            color="black"
-          />
-        </StyledTouchableOpacity>
-      </StyledView>
     </StyledView>
   );
 };
