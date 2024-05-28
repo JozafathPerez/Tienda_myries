@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { SafeAreaView, View, Text, TouchableOpacity } from "react-native";
+import { SafeAreaView, View, Text, TouchableOpacity, useWindowDimensions } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import RNPickerSelect from "react-native-picker-select";
 import { Ionicons } from '@expo/vector-icons';
 import ProductsList from "../components/ProductsList";
 import { Products } from "../Objects/Products";
+import { styled } from 'nativewind';
+
+const StyledView = styled(View);
 
 const Catalog = ({ route }) => {
   const [selectedCategory, setSelectedCategory] = useState('');
@@ -12,6 +15,8 @@ const Catalog = ({ route }) => {
   const [originalProducts, setOriginalProducts] = useState(Products);
   const [filteredProducts, setFilteredProducts] = useState(Products);
   const [searchQuery, setSearchQuery] = useState('');
+  const { width } = useWindowDimensions();
+  const isWideScreen = width >= 768; // 768px es un ancho común para tablets o vistas web
 
   const categories = [
     { label: "Todas", value: '' },
@@ -51,23 +56,25 @@ const Catalog = ({ route }) => {
   return (
     <GestureHandlerRootView>
       <SafeAreaView style={{ flex: 1, marginHorizontal: 10 }}>
-        <View style={{ marginBottom: 10 }}>
-          <RNPickerSelect
-            onValueChange={(value) => setSelectedCategory(value)}
-            items={categories}
-            placeholder={{ label: "Selecciona una categoría", value: '' }}
-          />
-        </View>
-        <View style={{ marginBottom: 10 }}>
-          <RNPickerSelect
-            onValueChange={(value) => setSortByPrice(value)}
-            items={[
-              { label: "Menor a mayor precio", value: false },
-              { label: "Mayor a menor precio", value: true }
-            ]}
-            placeholder={{ label: "Ordenar por precio", value: null }}
-          />
-        </View>
+        <StyledView className={isWideScreen ? "flex-row mb-2 justify-between items-center" : "mb-2"}>
+          <StyledView className={isWideScreen ? "flex-1 mr-2" : ""}>
+            <RNPickerSelect
+              onValueChange={(value) => setSelectedCategory(value)}
+              items={categories}
+              placeholder={{ label: "Selecciona una categoría", value: '' }}
+            />
+          </StyledView>
+          <StyledView className={isWideScreen ? "flex-1 ml-2" : ""}>
+            <RNPickerSelect
+              onValueChange={(value) => setSortByPrice(value)}
+              items={[
+                { label: "Menor a mayor precio", value: false },
+                { label: "Mayor a menor precio", value: true }
+              ]}
+              placeholder={{ label: "Ordenar por precio", value: null }}
+            />
+          </StyledView>
+        </StyledView>
         {searchQuery ? (
           <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
             <Text style={{ fontSize: 18, marginRight: 10 }}>
